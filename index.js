@@ -1,7 +1,18 @@
 btnSearch.addEventListener("click", onSearch)
+btnPaste.addEventListener("click", onPaste)
 
-async function onSearch(params) {
+async function onPaste() {
+  let clipText = await navigator.clipboard.readText()
+  txtSearch.value= clipText;
+  search(clipText);
+}
+
+async function onSearch() {
   const value = txtSearch.value;
+  search(value);
+}
+
+async function search(value){
   console.log("Searching: ", value)
   let instances = [];
   if(isYoutube(value)){
