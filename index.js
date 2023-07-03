@@ -46,10 +46,12 @@ async function fetchInvidious() {
 async function fetchNitter() {
   const response = await fetch('https://raw.githubusercontent.com/wiki/zedeus/nitter/Instances.md');
   const instancesTxt = await response.text();
-  const regex = /(?:(?:\| \[(?:\S+\.)+[a-zA-Z]+\]\((https?:\/{2}(?:\S+\.)+[a-zA-Z]+)\/?\) (?:\((?:\S+ ?\S*)\) )? *\| [^❌]{1,3} +\|(?:(?:\n)|(?: (?:❌)|(?: ✅)|(?: ❓)|(?: \[)))))/g
-  const instances = [... instancesTxt.matchAll(regex)]
+  const instancesToUse = instancesTxt.split('### Tor')[0];
+  const regex = /\((https:\/\/(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*.\S*)\)/g
+  const instances = [... instancesToUse.matchAll(regex)]
   console.log('nitter all', instances)
-  return instances.map(x => x[1]);
+  const toReturn = instances.map(x => x[1]).filter(x => !x.includes("ssl"));
+  return toReturn;
 }
 async function fetchLibreddit() {
   // const response = await fetch('https://raw.githubusercontent.com/spikecodes/libreddit/master/README.md');
