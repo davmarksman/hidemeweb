@@ -31,6 +31,7 @@ async function search(value){
   if(!redirect.includes("https")){
     newUrl = "//" + newUrl;
   }
+  newUrl = newUrl.replace('?ref_src=twsrc%5Etfw','');
   console.log(newUrl); 
   document.location.href = newUrl;
 }
